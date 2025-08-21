@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="page-title">Our Kids</h1>
+<p class="page-subtitle">Meet the wonderful children currently residing at IRIS FAMILY HOSTEL.</p>
+
+<div class="kids-grid">
+  {% for kid in kids %}
+    <div class="kid-card">
+      {% if kid.photo %}
+        <img src="{{ kid.photo.url }}" alt="{{ kid.name }} photo" class="kid-photo"/>
+      {% else %}
+        <div class="kid-photo placeholder">
+          <span>No Photo Available</span>
+        </div>
+      {% endif %}
+      <div class="kid-info">
+        <h3 class="kid-name">{{ kid.name }}</h3>
+        <p><strong>Parent:</strong> {{ kid.parent_name }}</p>
+        <p><strong>Age:</strong> {{ kid.age }}</p>
+        <p><strong>Room:</strong> {{ kid.room_number|default:"—" }}</p>
+        <p><strong>Guardian No:</strong> {{ kid.guardian_contact|default:"—" }}</p>
+        <p><strong>Admission:</strong> {{ kid.admission_date }}</p>
+      </div>
+    </div>
+  {% empty %}
+    <p class="empty-message">No kids found. Please add kids from the admin panel.</p>
+  {% endfor %}
+</div>
+{% endblock %}

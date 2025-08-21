@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>{{ hero.title }}</h1>
+    <p>{{ hero.description }}</p>
+    <div class="hero-actions">
+      <a class="btn" href="{{ hero.button_link }}">{{ hero.button_text }}</a>
+    </div>
+  </div>
+  {% if hero.image %}
+    <img class="hero-img" src="{{ hero.image.url }}" alt="Hero Image">
+  {% else %}
+    <img class="hero-img" src="/static/images/hero.jpg" alt="Hero Image">
+  {% endif %}
+</section>
+
+<section class="features">
+  <h2>Why Choose Us</h2>
+  <div class="cards">
+    {% for feature in features %}
+      <div class="card">
+        <h3>{{ feature.title }}</h3>
+        <div class="card-content">
+          {% if feature.image %}
+            <div class="card-img-container">
+              <img src="{{ feature.image.url }}" alt="{{ feature.title }}" class="card-img">
+            </div>
+          {% endif %}
+          <p>{{ feature.description }}</p>
+        </div>
+      </div>
+    {% empty %}
+      <p>No features added yet. Please add them from admin.</p>
+    {% endfor %}
+  </div>
+</section>
+
+
+<section class="about">
+  <h2>{{ about.heading }}</h2>
+  <p>{{ about.content }}</p>
+  {% if about.image %}
+    <img src="{{ about.image.url }}" alt="{{ about.title }}">
+  {% endif %}
+</section>
+
+<section class="cta">
+  <div class="cta-inner">
+    <h2>Visit Us Today</h2>
+    <p>Schedule a tour to see our facilities and meet our caring staff.</p>
+    <a class="btn" href="mailto:hello@irisfamilyhostel.com">Book a Tour</a>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="header-section">
+        <h1 class="page-title">Generate Invoices <span class="highlight">(Bulk)</span></h1>
+        <p class="subtitle">Create invoices for all active kids with one click. Existing invoices for the selected period will be automatically skipped.</p>
+    </div>
+
+    <div class="card form-card">
+        <div class="card-header">
+            <h2>Invoice Details</h2>
+        </div>
+        
+        <form method="post" class="form-content">
+            {% csrf_token %}
+            <div class="form-grid">
+                {% for field in form %}
+                <div class="form-field floating">
+                    {{ field }}
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {% if field.help_text %}
+                        <small>{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Generate Now</button>
+                <a href="/billing/invoices/" class="btn btn-secondary">Back to Invoices</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary: #4361ee;
+    --primary-gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    --text: #2b2d42;
+    --text-light: #6c757d;
+    --card-background: #ffffff;
+    --border: #e6eef5;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf5 100%);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    padding: 2rem;
+}
+
+.container { max-width: 1000px; margin: 0 auto; }
+.header-section { text-align: center; margin-bottom: 2.5rem; }
+.page-title { font-size: 2.5rem; font-weight: 800; }
+.highlight { background: var(--primary-gradient); -webkit-background-clip: text; color: transparent; }
+.subtitle { color: var(--text-light); margin-top: 0.5rem; }
+
+.card { background: var(--card-background); border-radius: 20px; box-shadow: var(--shadow); transition: var(--transition); overflow: hidden; }
+.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-5px); }
+.card-header { background: var(--primary-gradient); color: white; padding: 1.5rem 2rem; }
+
+.form-content { padding: 2rem; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.8rem; }
+.form-field { position: relative; display: flex; flex-direction: column; }
+.form-field input, .form-field select { padding: 1.2rem 1rem; border: 2px solid var(--border); border-radius: 12px; font-size: 1rem; background: var(--card-background); }
+.form-field label { position: absolute; top: 16px; left: 15px; color: var(--text-light); pointer-events: none; transition: var(--transition); }
+.form-field input:focus + label,
+.form-field select:focus + label,
+.form-field input:not(:placeholder-shown) + label,
+.form-field select:not([value=""]) + label {
+    top: -10px; left: 10px; font-size: 0.8rem; background: white; padding: 0 8px; color: var(--primary);
+}
+small { font-size: 0.85rem; color: var(--text-light); margin-top: 0.3rem; }
+.error { color: red; font-size: 0.85rem; margin-top: 0.3rem; }
+
+.form-actions { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
+.btn { padding: 1rem 2rem; border-radius: 12px; font-weight: 600; cursor: pointer; border: none; }
+.btn-primary { background: var(--primary-gradient); color: white; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4); }
+.btn-secondary { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+.btn-secondary:hover { background: rgba(67, 97, 238, 0.05); }
+</style>
+{% endblock %}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IRIS FAMILY HOSTEL</title>
+  <link rel="stylesheet" href="/static/css/styles.css"/>
+  <link rel="stylesheet" href="/static/css/kids.css"/>
+  <link rel="stylesheet" href="/static/css/home.css"/>
+  <link rel="stylesheet" href="/static/css/home_feature.css"/>
+
+
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="/">IRIS FAMILY HOSTEL</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/kids/">Kids</a>
+        <a href="/billing/invoices/">Invoices</a>
+        {% if user.is_authenticated %}
+          <span class="welcome">Hi, {{ user.username }}</span>
+          <form method="POST" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn">Logout</button>
+          </form>
+        {% else %}
+          <a class="btn" href="/accounts/login/">Admin Login</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  {% if messages %}
+  <div class="container">
+    {% for message in messages %}
+      <div class="alert">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <main class="container content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="grid-3">
+        <div>
+          <h4>IRIS FAMILY HOSTEL</h4>
+          <p>A safe, caring, and family-like environment for your children in the heart of Kathmandu.</p>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p><strong>Phone:</strong> +977-9869210025</p>
+          <p><strong>Email:</strong> hello@irisfamilyhostel.com</p>
+          <p><strong>Address:</strong> Lalitpur, Nepal</p>
+        </div>
+        <div>
+          <h4>Hours</h4>
+          <p>Mon–Fri: 8:00–18:00</p>
+          <p>Sat: 9:00–13:00</p>
+          <p>Sun: Closed</p>
+        </div>
+      </div>
+      <p class="copyright">© {{ now|default:None|date:"Y" }} IRIS FAMILY HOSTEL. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

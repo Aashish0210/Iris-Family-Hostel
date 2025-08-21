@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1>Invoices</h1>
+    <p class="subtitle">Only admins can see this page. Generate monthly invoices for all kids at once.</p>
+
+    <div class="actions">
+        <a class="btn btn-primary" href="/billing/generate/">
+            Generate Invoices
+        </a>
+    </div>
+
+    <div class="table-container">
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Kid</th>
+                    <th>Parent</th>
+                    <th>Month</th>
+                    <th>Year</th>
+                    <th>Amount</th>
+                    <th>VAT %</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inv in invoices %}
+                <tr>
+                    <td data-label="Kid">{{ inv.kid.name }}</td>
+                    <td data-label="Parent">{{ inv.kid.parent_name }}</td>
+                    <td data-label="Month">{{ inv.month }}</td>
+                    <td data-label="Year">{{ inv.year }}</td>
+                    <td data-label="Amount">Rs. {{ inv.amount }}</td>
+                    <td data-label="VAT">{{ inv.vat_rate }}%</td>
+                    <td data-label="Total">Rs. {{ inv.total }}</td>
+                    <td data-label="Status"><span class="status status-{{ inv.status }}">{{ inv.get_status_display }}</span></td>
+                    <td data-label="Action"><a class="btn-view" href="/billing/invoices/{{ inv.id }}/">View</a></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="no-data">
+                        <i class="fas fa-file-invoice"></i>
+                        <p>No invoices yet. Click "Generate Invoices" to create invoices.</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --accent: #f72585;
+    --text: #2b2d42;
+    --text-light: #6c757d;
+    --background: #f8f9fa;
+    --card-background: #ffffff;
+    --border: #dee2e6;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --success: #4cc9f0;
+    --warning: #ffbe0b;
+    --error: #e63946;
+    --transition: all 0.3s ease;
+}
+
+body {
+    background: var(--background);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 2px;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.actions {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+}
+
+.table-container {
+    background: var(--card-background);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoice-table th {
+    background: var(--primary-dark);
+    color: white;
+    font-weight: 600;
+    text-align: left;
+    padding: 1rem;
+}
+
+.invoice-table td {
+    padding: 0.9rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.invoice-table tr:last-child td {
+    border-bottom: none;
+}
+
+.invoice-table tbody tr:hover {
+    background-color: var(--primary-light);
+}
+
+.status {
+    padding: 0.3rem 0.7rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+}
+
+.status-paid {
+    background-color: rgba(76, 201, 240, 0.15);
+    color: var(--success);
+}
+
+.status-pending {
+    background-color: rgba(255, 190, 11, 0.15);
+    color: var(--warning);
+}
+
+.status-overdue {
+    background-color: rgba(230, 57, 70, 0.15);
+    color: var(--error);
+}
+
+.btn-view {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-view:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.no-data {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-light);
+}
+
+.no-data i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--border);
+}
+
+.no-data p {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}
