@@ -1,0 +1,172 @@
+/* ---------------- Features Section ---------------- */
+.features {
+  padding: 4rem 1.5rem;
+  background: #eef6ff; /* light background like before */
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+/* ---------------- Floating Shapes ---------------- */
+.features .shape {
+  position: absolute;
+  opacity: 1; /* subtle shapes */
+  z-index: 0.7; /* behind content */
+  animation: float 10s ease-in-out;
+  border-radius: 80%; /* default circular shape */
+}
+
+/* .features .shape1 {
+  width: 20px;
+  height: 20px;
+  top: 0%;
+  left: 0%;
+  border: 20px solid #44d278; 
+} */
+
+
+/* Different shapes with border only */
+
+/* .features .shape2 {
+  width: 180px;
+  height: 100px;
+  top: 40%;
+  left: 10%;
+  border: 1px solid #4923ba; 
+} */
+
+
+/* Floating animation */
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(45deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* ---------------- Section Title ---------------- */
+.features h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--brand-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: 1; /* above shapes */
+  position: relative;
+}
+
+/* ---------------- Cards Container ---------------- */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  z-index: 1; /* above shapes */
+}
+
+/* ---------------- Individual Card ---------------- */
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9); /* lighter card */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.8s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.card.left { flex-direction: row; }
+.card.right { flex-direction: row-reverse; }
+
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Image Container */
+.card-img-container {
+  flex: 0 0 200px;
+  height: 200px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  transition: transform 0.5s ease;
+}
+
+.card-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .card-img-container img {
+  transform: scale(1.05);
+}
+
+/* Card Text */
+.card-text {
+  flex: 1;
+}
+
+.card-text h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.8rem;
+  color: #2a5298;
+}
+
+.card-text p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #555;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 992px) {
+  .card,
+  .card.left,
+  .card.right {
+    flex-direction: column !important;
+    text-align: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .card-img-container {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .card,
+  .card.left,
+  .card.right {
+    flex-direction: column !important;
+    text-align: left;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .card-img-container {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 0.8rem;
+  }
+
+  .card-text h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .card-text p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+}

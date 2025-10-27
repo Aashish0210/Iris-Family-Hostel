@@ -67,6 +67,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+ALLOWED_HOSTS = ['IrisFamilyHostel.pythonanywhere.com']
+DEBUG = False
 
 AUTH_PASSWORD_VALIDATORS = [
     {

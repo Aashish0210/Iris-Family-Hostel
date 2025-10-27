@@ -1,0 +1,21 @@
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.contact-form, .contact-map {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Mobile-friendly stacking */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+  }
+
+  .contact-map {
+    height: 300px; /* smaller height on mobile */
+  }
+}
