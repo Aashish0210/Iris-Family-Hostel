@@ -4,6 +4,7 @@ from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from core.views import home_view 
 
 urlpatterns = [
     path('admin/', admin.site.urls),

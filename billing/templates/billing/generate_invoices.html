@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <div class="container">
     <div class="header-section">
@@ -15,22 +16,22 @@
             {% csrf_token %}
             <div class="form-grid">
                 {% for field in form %}
-                <div class="form-field floating">
-                    {{ field }}
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {% if field.help_text %}
-                        <small>{{ field.help_text }}</small>
-                    {% endif %}
-                    {% for error in field.errors %}
-                        <div class="error">{{ error }}</div>
-                    {% endfor %}
-                </div>
+                    <div class="form-field floating">
+                        {{ field }}
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {% if field.help_text %}
+                            <small>{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
                 {% endfor %}
             </div>
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Generate Now</button>
-                <a href="/billing/invoices/" class="btn btn-secondary">Back to Invoices</a>
+                <a href="{% url 'invoice_list' %}" class="btn btn-secondary">Back to Invoices</a>
             </div>
         </form>
     </div>

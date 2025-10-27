@@ -12,6 +12,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # settings.py
 LOGOUT_REDIRECT_URL = '/'
 
+# settings.py
+DEFAULT_FROM_EMAIL = 'no-reply@yourdomain.com'
+ADMIN_EMAIL = 'admin@yourdomain.com'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
