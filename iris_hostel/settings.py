@@ -115,6 +115,8 @@ USE_TZ = True
 # STATICFILES_DIRS = [BASE_DIR / 'static']   # Development
 # STATIC_ROOT = BASE_DIR / 'staticfiles'     # Production collectstatic
 
+# loading the static files from the static folder pull from the base dir and join using os module
+
 MEDIA_URL = '/media/'
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -126,8 +128,6 @@ if DEBUG:
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static',)
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media',)
-
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # --------------------
