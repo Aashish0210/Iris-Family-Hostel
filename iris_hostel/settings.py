@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Security & Debug
 # --------------------
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key-for-dev')
-DEBUG = True  # Set False in production
+DEBUG = False  # Set False in production
 ALLOWED_HOSTS = ['*']  # Replace with your domain in production
 
 # --------------------
@@ -111,12 +111,24 @@ USE_TZ = True
 # --------------------
 # Static & Media
 # --------------------
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']   # Development
-STATIC_ROOT = BASE_DIR / 'staticfiles'     # Production collectstatic
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [BASE_DIR / 'static']   # Development
+# STATIC_ROOT = BASE_DIR / 'staticfiles'     # Production collectstatic
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+if DEBUG:
+    STATICFILES_DIRS = os.path.join(BASE_DIR, 'static',)
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media',)
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static',)
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media',)
+
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # --------------------
 # Default Primary Key
